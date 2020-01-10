@@ -22,6 +22,10 @@ colorscheme desert
 syntax on
 syntax enable
 
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,node_modules/*
+let g:ctrlp_custom_ignore='node_modules'
+
+
 call plug#begin('D:\Program Files\Vim\vim82\plugged')
 
 Plug 'scrooloose/nerdtree'
@@ -29,12 +33,18 @@ Plug 'tpope/vim-sensible'
 Plug 'junegunn/seoul256.vim'
 Plug 'shawncplus/phpcomplete.vim'
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'mattn/emmet-vim'
 
 call plug#end()
 
 map <leader>f :NERDTreeToggle<CR>
 map H 0
 map L $
+map <C-J> 10<C-E>
+map <C-K> 10<C-Y>
+nmap <C-S> :w!<CR>
+imap <C-S> <Esc>:w!<CR>
+
 
 
 function! UpdateCtags()
