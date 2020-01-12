@@ -1,0 +1,50 @@
+* 选择中国源
+  sudo pacman-mirrors -i -c China -m rank     //选择中国源并更新
+  sudo pacman -Syyu                           //更新系统
+* 选择软件源
+  sudo gedit /etc/pacman.conf
+  [archlinuxcn]
+  SigLevel = Optional TrustedOnly
+  Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch
+  
+  更新 pacman -Syyu
+  更新签名 sudo pacman -Syy && sudo pacman -S archlinuxcn-keyring
+* 修改Home目录为英文
+  vim .config/user-dirs.dirs
+  
+  XDG_DESKTOP_DIR="$HOME/Desktop"
+  XDG_DOWNLOAD_DIR="$HOME/Download"
+  XDG_TEMPLATES_DIR="$HOME/Templates"
+  XDG_PUBLICSHARE_DIR="$HOME/Public"
+  XDG_DOCUMENTS_DIR="$HOME/Documents"
+  XDG_MUSIC_DIR="$HOME/Music"
+  XDG_PICTURES_DIR="$HOME/Pictures"
+  XDG_VIDEOS_DIR="$HOME/Videos"
+* google-chrome
+  sudo pacman -S google-chrome
+* 安装搜狗输入法
+  sudo pacman -S fcitx-sogoupinyin
+  sudo pacman -S fcitx-im
+  配置 ~/.xprofile
+  export GTK_IM_MODULE=fcitx
+  export QT_IM_MODULE=fcitx
+  export XMODIFIERS=@im=fcitx
+* zsh install
+  sudo pacman -S zsh
+  chsh -s /bin/zsh
+  在终端菜单，选择编辑-首选项-命令,选中运行一个自定义命令，输入zsh
+  重启 reboot
+
+* node install
+  sudo pacman -Syu nodejs npm
+* map Caps Lock to Escape
+  xmodmap -e "clear lock"
+  xmodmap -e "keycode 0x42 = Escape"
+  
+  - undo
+  xmodmap -e "keycode 0x42 = Caps_Lock"
+  xmodmap -e "add lock = Caps_Lock"
+* 设置-外观
+  样式 Adwalta-dark
+  图标 Papirus-Dark
+  字体 Noto Serif Dogra Regular
