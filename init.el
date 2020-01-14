@@ -71,6 +71,7 @@
 
 ; 开启全局 Company 补全
 (global-company-mode 1)
+(global-hl-line-mode 1)
 
 (setq make-backup-files nil)
 
@@ -88,14 +89,14 @@
 
 (delete-selection-mode 1)
 
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")                                                      
 (load-theme 'srcery t)
 ;;(load-theme 'taming-mr-arneson t)
 ;; (load-theme 'manoj-dark t)
 
 (add-hook 'after-init-hook #'global-flycheck-mode)
 (global-set-key (kbd "C-z") 'shell)
-(global-set-key (kbd "C-j") 'backward-to-word)
+(global-set-key (kbd "C-j") 'backward-word)
 (global-set-key (kbd "C-l") 'forward-to-word)
 (global-set-key (kbd "C-;") 'set-mark-command)
 (global-set-key (kbd "C-<") 'beginning-of-buffer)
@@ -105,11 +106,10 @@
 
 (set-default-font "Terminus (TTF)-12")
 (setq-default line-spacing 0.2)
-
+  
 (setq neo-window-fixed-size nil)
 (setq neo-window-width 50)
 
 (global-set-key (kbd "C-c l") 'org-store-link)
 (global-set-key (kbd "C-c a") 'org-agenda)
 (global-set-key (kbd "C-c c") 'org-capture)
-
