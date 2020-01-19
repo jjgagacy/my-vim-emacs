@@ -71,6 +71,7 @@
 
 ; 开启全局 Company 补全
 (global-company-mode 1)
+; highlight line
 (global-hl-line-mode 1)
 
 (setq make-backup-files nil)
@@ -81,6 +82,7 @@
 (global-set-key (kbd "<f6>") 'flycheck-previous-error)
 (global-set-key (kbd "<f7>") 'flycheck-next-error)
 (global-set-key (kbd "<f8>") 'neotree-toggle)
+(global-set-key (kbd "C-c n") 'find-file-other-window)
 
 
 (require 'recentf)
@@ -89,10 +91,8 @@
 
 (delete-selection-mode 1)
 
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")                                                      
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (load-theme 'srcery t)
-;;(load-theme 'taming-mr-arneson t)
-;; (load-theme 'manoj-dark t)
 
 (add-hook 'after-init-hook #'global-flycheck-mode)
 (global-set-key (kbd "C-z") 'shell)
@@ -103,8 +103,7 @@
 (global-set-key (kbd "C->") 'end-of-buffer)
 (global-set-key (kbd "C-'") 'recenter)
 
-
-(set-default-font "Terminus (TTF)-12")
+(set-frame-font "Terminus (TTF)-12")
 (setq-default line-spacing 0.2)
   
 (setq neo-window-fixed-size nil)
@@ -113,3 +112,31 @@
 (global-set-key (kbd "C-c l") 'org-store-link)
 (global-set-key (kbd "C-c a") 'org-agenda)
 (global-set-key (kbd "C-c c") 'org-capture)
+
+(defun duplicate-line()
+  (interactive)
+  (move-beginning-of-line 1)
+  (kill-line)
+  (yank)
+  (open-line 1)
+  (next-line 1)
+  (yank)
+)
+(global-set-key (kbd "C-c d") 'duplicate-line)
+
+(global-set-key [(f11)] 'loop-alpha) 
+
+(setq alpha-list '((100 100) (95 65) (85 55) (75 45) (65 35))) 
+
+(defun loop-alpha () 
+  (interactive) 
+  (let ((h (car alpha-list)))                ;; head value will set to 
+    ((lambda (a ab) 
+       (set-frame-parameter (selected-frame) 'alpha (list a ab)) 
+       (add-to-list 'default-frame-alist (cons 'alpha (list a ab))) 
+       ) (car h) (car (cdr h))) 
+    (setq alpha-list (cdr (append alpha-list (list h)))) 
+    ) 
+) 
+
+;;;
