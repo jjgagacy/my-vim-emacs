@@ -57,13 +57,13 @@
 
 ;; theme
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
-(use-package spacemacs-theme
-  :init (load-theme 'spacemacs-light t))
+(load-theme 'tango)
+
 ;; mode line
 (use-package smart-mode-line
   :init
   (setq sml/no-confirm-load-theme t)
-  (setq sml/theme 'repectful)
+  (setq sml/theme 'light)
   (sml/setup))
 
 ;; recentf
@@ -102,7 +102,7 @@
   :config
   (progn
 	(setq neo-smart-open t)
-	(setq neo-theme (if (display-grapics-p) 'icons 'nerd))
+	(setq neo-theme (if (display-graphic-p) 'icons 'nerd))
 	(setq neo-window-fixed-size nil)
 	(global-set-key (kbd "C-c t") 'neotree-toggle)
 	(global-set-key (kbd "C-c ;") 'neotree-change-root)
@@ -116,3 +116,29 @@
 (global-set-key (kbd "M-0") 'next-multiframe-window)
 (global-set-key (kbd "M-9") 'previous-multiframe-window)
 
+
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ansi-color-faces-vector
+   [default default default italic underline success warning error])
+ '(company-backends
+   (quote
+    (company-bbdb company-semantic company-cmake company-capf company-clang company-files
+		  (company-dabbrev-code company-gtags company-etags company-keywords)
+		  company-oddmuse company-dabbrev)))
+ '(custom-safe-themes
+   (quote
+    ("fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "3d4df186126c347e002c8366d32016948068d2e9198c496093a96775cc3b3eaa" default)))
+ '(package-selected-packages
+   (quote
+    (smart-mode-line gruvbox-theme ivy-mode use-package helm ivy-explorer ivy-posframe ivy xah-css-mode emmet-mode xref auto-complete company ac-js2 spacemacs-theme web-mode flymake-jslint auto-compile abyss-theme neotree phps-mode))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
