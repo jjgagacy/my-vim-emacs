@@ -36,7 +36,6 @@
 (blink-cursor-mode 1)
 (global-hl-line-mode 1)
 (show-paren-mode t)
-(display-battery-mode 1)
 (tool-bar-mode -1)
 (menu-bar-mode t)
 (toggle-scroll-bar -1)
@@ -102,7 +101,6 @@
   :config
   (progn
 	(setq neo-smart-open t)
-	(setq neo-theme (if (display-graphic-p) 'icons 'nerd))
 	(setq neo-window-fixed-size nil)
 	(global-set-key (kbd "C-c t") 'neotree-toggle)
 	(global-set-key (kbd "C-c ;") 'neotree-change-root)
