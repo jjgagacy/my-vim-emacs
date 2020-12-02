@@ -1,142 +1,118 @@
-;;;
-;;;
-(require 'package)
-(add-to-list 'package-archives
-             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
 (package-initialize)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ansi-color-faces-vector
-   [default default default italic underline success warning error])
- '(ansi-color-names-vector
-   ["black" "red3" "ForestGreen" "yellow3" "blue" "magenta3" "DeepSkyBlue" "gray50"])
- '(cursor-type (quote bar))
- '(custom-enabled-themes nil)
- '(custom-safe-themes
-   (quote
-    ("96bfc952ae7c93984085406c44d9ec3b98784a9de445d35958588ac9e303af1d" "946e871c780b159c4bb9f580537e5d2f7dba1411143194447604ecbaf01bd90c" "cf284fac2a56d242ace50b6d2c438fcc6b4090137f1631e32bedf19495124600" "64ca5a1381fa96cb86fd6c6b4d75b66dc9c4e0fc1288ee7d914ab8d2638e23a9" "c616e584f7268aa3b63d08045a912b50863a34e7ea83e35fcab8537b75741956" "b181ea0cc32303da7f9227361bb051bbb6c3105bb4f386ca22a06db319b08882" "962dacd99e5a99801ca7257f25be7be0cebc333ad07be97efd6ff59755e6148f" "3eb93cd9a0da0f3e86b5d932ac0e3b5f0f50de7a0b805d4eb1f67782e9eb67a4" "0effdff4be43fd2a90f6bea0ea9abd67f105f15df11045bb5ecd253207d0c9cc" "f8cf128fa0ef7e61b5546d12bb8ea1584c80ac313db38867b6e774d1d38c73db" default)))
- '(package-selected-packages
-   (quote
-    (srcery-theme magit flycheck phps-mode neotree company-php company ac-php))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
 
-(require 'php-mode)
+;; 包设置
+(require 'package)
+(setq package-enable-at-startup nil)
+(setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
+						 ("melpa" . "http://elpa.emacs-china.org/melpa/")))
 
-(add-hook 'php-mode-hook
-          '(lambda ()
-             ;; Enable company-mode
-             (company-mode t)
-             (require 'company-php)
+;; use package
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
 
-             ;; Enable ElDoc support (optional)
-             (ac-php-core-eldoc-setup)
+(eval-when-compile
+  (require 'use-package))
+(setq use-package-verbose t)
+(setq use-package-always-ensure t)
 
-             (set (make-local-variable 'company-backends)
-                  '((company-ac-php-backend company-dabbrev-code)
-                    company-capf company-files))
+;; encoding and envs
+(prefer-coding-system 'utf-8)
+(set-language-environment 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-selection-coding-system 'utf-8)
+(setenv "LANG" "en_US.UTF-8")
+(setenv "LC_ALL" "en_US.UTF-8")
+(setenv "LC_CTYPE" "en_US.UTF-8")
 
-             ;; Jump to definition (optional)
-             (define-key php-mode-map (kbd "M-]")
-               'ac-php-find-symbol-at-point)
-
-             ;; Return back (optional)
-             (define-key php-mode-map (kbd "M-[")
-               'ac-php-location-stack-back)))
-
-;; 关闭工具栏，tool-bar-mode 即为一个 Minor Mode
-(tool-bar-mode -1)
-
-;; 关闭文件滑动控件
-(scroll-bar-mode -1)
-
-;; 显示行号
-(global-linum-mode 1)
-
-;; 更改光标的样式（不能生效，解决方案见第二集）
-(setq cursor-type 'bar)
-
-;; 关闭启动帮助画面
-(setq inhibit-splash-screen 1)
-
-;; 这一行代码，将函数 open-init-file 绑定到 <f2> 键上
-(global-set-key (kbd "<f2>") 'open-init-file)
-
-; 开启全局 Company 补全
-(global-company-mode 1)
-; highlight line
+;; feature mode
+(display-time-mode 1)
+(column-number-mode 1)
+(blink-cursor-mode 1)
 (global-hl-line-mode 1)
+(show-paren-mode t)
+(display-battery-mode 1)
+(tool-bar-mode -1)
+(menu-bar-mode t)
+(toggle-scroll-bar -1)
 
-(setq make-backup-files nil)
+;; setting vars
+(setq
+ tab-width 4
+ inhibit-startup-screen t
+ inhibit-splash-screen t
+ make-backup-files nil
+ backup-by-copying t
+ create-lockfiles nil
+ auto-save-default nil
+ show-paren-style 'parenthesis
+ )
+(when (version<= "26.0.60" emacs-version)
+  (global-display-line-numbers-mode))
 
-;; 刷新标签
-(global-set-key (kbd "<f5>") 'ac-php-remake-tags)
-;; 查找错误
-(global-set-key (kbd "<f6>") 'flycheck-previous-error)
-(global-set-key (kbd "<f7>") 'flycheck-next-error)
-(global-set-key (kbd "<f8>") 'neotree-toggle)
-(global-set-key (kbd "C-c n") 'find-file-other-window)
+;; theme
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
+(use-package spacemacs-theme
+  :init (load-theme 'spacemacs-light t))
+;; mode line
+(use-package smart-mode-line
+  :init
+  (setq sml/no-confirm-load-theme t)
+  (setq sml/theme 'repectful)
+  (sml/setup))
 
+;; recentf
+(use-package recentf
+  :config
+  (progn
+    (setq recentf-max-saved-items 200
+		  recentf-max-menu-items 15)
+	(global-set-key (kbd "C-c 1") 'recentf-open-files)
+    (recentf-mode)))
 
-(require 'recentf)
-(recentf-mode 1)
-(setq recentf-max-menu-item 10)
+;; company
+(use-package company
+  :ensure t
+  :config
+  (progn
+    (add-hook 'after-init-hook 'global-company-mode)))
 
-(delete-selection-mode 1)
+;; js2-mode
+(use-package js2-mode
+  :config
+  (progn
+    (add-hook 'js-mode-hook 'ac-js2-mode)))
 
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-(load-theme 'srcery t)
+;; ivy
+(use-package ivy
+  :config
+  (progn
+    (setq ivy-use-virtual-buffers t
+		  enable-recursive-minibuffers t)))
 
-(add-hook 'after-init-hook #'global-flycheck-mode)
-(global-set-key (kbd "C-z") 'shell)
-(global-set-key (kbd "C-j") 'backward-word)
-(global-set-key (kbd "C-l") 'forward-to-word)
-(global-set-key (kbd "C-;") 'set-mark-command)
-(global-set-key (kbd "C-<") 'beginning-of-buffer)
-(global-set-key (kbd "C->") 'end-of-buffer)
-(global-set-key (kbd "C-'") 'recenter)
+;; neotree
+(use-package neotree
+  :custom
+  (neo-theme 'nerd2)
+  :config
+  (progn
+	(setq neo-smart-open t)
+	(setq neo-theme (if (display-grapics-p) 'icons 'nerd))
+	(setq neo-window-fixed-size nil)
+	(global-set-key (kbd "C-c t") 'neotree-toggle)
+	(global-set-key (kbd "C-c ;") 'neotree-change-root)
+	(global-set-key [f1] 'neotree-toggle)
+	(global-set-key [f2] 'neotree-dir)))
 
-(set-frame-font "Terminus (TTF)-12")
-(setq-default line-spacing 0.2)
-  
-(setq neo-window-fixed-size nil)
-(setq neo-window-width 50)
+;; keybind
+(global-set-key (kbd "C-\\") 'comment-line)
+(global-set-key (kbd "C-c f") 'grep-find)
+(global-set-key (kbd "C-c g") 'goto-line)
+(global-set-key (kbd "M-0") 'next-multiframe-window)
+(global-set-key (kbd "M-9") 'previous-multiframe-window)
 
-(global-set-key (kbd "C-c l") 'org-store-link)
-(global-set-key (kbd "C-c a") 'org-agenda)
-(global-set-key (kbd "C-c c") 'org-capture)
-
-(defun duplicate-line()
-  (interactive)
-  (move-beginning-of-line 1)
-  (kill-line)
-  (yank)
-  (open-line 1)
-  (next-line 1)
-  (yank)
-)
-(global-set-key (kbd "C-c d") 'duplicate-line)
-
-(global-set-key [(f11)] 'loop-alpha) 
-
-(setq alpha-list '((100 100) (95 65) (85 55) (75 45) (65 35))) 
-
-(defun loop-alpha () 
-  (interactive) 
-  (let ((h (car alpha-list)))                ;; head value will set to 
-    ((lambda (a ab) 
-       (set-frame-parameter (selected-frame) 'alpha (list a ab)) 
-       (add-to-list 'default-frame-alist (cons 'alpha (list a ab))) 
-       ) (car h) (car (cdr h))) 
-    (setq alpha-list (cdr (append alpha-list (list h)))) 
-    ) 
-) 
-
-;;;
