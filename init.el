@@ -107,6 +107,18 @@
 	(global-set-key [f1] 'neotree-toggle)
 	(global-set-key [f2] 'neotree-dir)))
 
+;; multiple cursors
+(require 'multiple-cursors)
+(global-unset-key (kbd "M-<down-mouse-1>"))
+(global-set-key (kbd "M-<mouse-1>") 'mc/add-cursor-on-click)
+
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+
+
 ;; keybind
 (global-set-key (kbd "C-\\") 'comment-line)
 (global-set-key (kbd "C-c f") 'grep-find)
